@@ -6,6 +6,7 @@ use app\models\Categories;
 use Yii;
 use app\models\Posts;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -89,8 +90,17 @@ class PostController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+                $model->unlinkAll('categories', true);
+            $categories = Categories::find()->where(['id' => $model->category])->all();
+            foreach($categories as $category){
+                $model->link('categories', $category);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            $categories = $model->categories;
+            $model->category = ArrayHelper::getColumn($categories, 'id');
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -105,7 +115,9 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        $model->unlinkAll('categories', true);
 
         return $this->redirect(['index']);
     }

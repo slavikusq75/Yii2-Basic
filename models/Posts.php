@@ -12,6 +12,7 @@ use Yii;
  * @property string $author
  *
  * @property PostsCategories[] $postsCategories
+ * @property Categories[] $categories
  */
 class Posts extends \yii\db\ActiveRecord
 {
