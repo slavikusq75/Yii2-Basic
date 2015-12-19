@@ -31,7 +31,8 @@ class Posts extends \yii\db\ActiveRecord
     {
         return [
             [['post', 'author'], 'required'],
-            [['post', 'author'], 'string', 'max' => 255]
+            [['post', 'author'], 'string', 'max' => 255],
+            ['category', 'safe']
         ];
     }
 
@@ -54,4 +55,10 @@ class Posts extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PostsCategories::className(), ['post_id' => 'id']);
     }
+
+    public function getCategories(){
+        return $this->hasMany(Categories::className(),['id'=>'category_id'])
+            ->viaTable('posts_categories',['post_id'=>'id']);
+    }
+
 }

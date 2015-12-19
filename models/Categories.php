@@ -47,8 +47,13 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPostsCategories()
+    /*public function getPostsCategories()
     {
         return $this->hasMany(PostsCategories::className(), ['category_id' => 'id']);
+    }*/
+
+    public function getPosts() {
+        $this->hasMany(Categories::className(), ['id' => 'post_id'])
+            ->viaTable('posts_categories', ['category_id' => 'id']);
     }
 }

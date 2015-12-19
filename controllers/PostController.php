@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Categories;
 use Yii;
 use app\models\Posts;
 use yii\data\ActiveDataProvider;
@@ -63,6 +64,12 @@ class PostController extends Controller
         $model = new Posts();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $categories = Categories::find()->where(['id' => $model->category])->all();
+            foreach($categories as $category){
+                $model->link('categories', $category);
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
