@@ -119,6 +119,8 @@ class PostController extends Controller
 
         $model->unlinkAll('categories', true);
 
+        $model->delete();
+
         return $this->redirect(['index']);
     }
 
