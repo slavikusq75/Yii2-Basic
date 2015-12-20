@@ -101,13 +101,12 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
 
         if (!empty($model->posts)){
-            return $this->render('error',[
-                'model' => $model,
-            ]);
+            return $this->render('error');
         } else {
-        $model->delete();
+            $model->delete();
+        };
         return $this->redirect(['index']);
-        }
+
     }
 
     /**

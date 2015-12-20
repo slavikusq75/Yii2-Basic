@@ -46,16 +46,17 @@ class Posts extends \yii\db\ActiveRecord
             'id' => 'ID',
             'post' => 'Post',
             'author' => 'Author',
+            'category' => 'Categories',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPostsCategories()
+    /*public function getPostsCategories()
     {
         return $this->hasMany(PostsCategories::className(), ['post_id' => 'id']);
-    }
+    }*/
 
     public function getCategories(){
         return $this->hasMany(Categories::className(),['id'=>'category_id'])
