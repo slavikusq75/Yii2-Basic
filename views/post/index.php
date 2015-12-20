@@ -22,11 +22,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            [
+            /*[
                 'attribute' => 'category_id',
-                'value' => 'categories.title',
+                'value' => 'categories.category_id',
+            ],*/
+
+
+            [
+                'label' => 'Categories',
+                'format' => 'raw',
+                'value' => function(\app\models\Posts $model){
+                    $result = '' ;
+                    foreach($model->categories  as $category ){
+                        $result.=  Html::a($category->title, ['category/view', 'id' => $category->id]);
+                        $result.='<br>';
+                    }
+                    return $result;
+                }
             ],
-            'categories.category_id',
+
+
+            //'categories.category_id',
             'id',
             'post',
             'author',
