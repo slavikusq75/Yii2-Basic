@@ -14,17 +14,7 @@ use yii\filters\VerbFilter;
  */
 class CategoryController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
+
 
     /**
      * Lists all Categories models.
@@ -100,7 +90,7 @@ class CategoryController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (!empty($model->posts)){
+        if (count($model->posts)){
             return $this->render('error');
         } else {
             $model->delete();
