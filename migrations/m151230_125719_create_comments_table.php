@@ -3,7 +3,7 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m151228_103806_create_comments_table extends Migration
+class m151230_125719_create_comments_table extends Migration
 {
     public function up()
     {
@@ -15,10 +15,13 @@ class m151228_103806_create_comments_table extends Migration
 
         $this->createTable('comments', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer(),
+            'userblog_id' => $this->integer(),
             'post_id' => $this->integer(),
             'comment' => $this->text()->notNull(),
         ], $tableOptions);
+
+        $this->addForeignKey('FK_comment_post', 'comments', 'post_id', 'posts', 'id');
+        $this->addForeignKey('FK_comment_userblog', 'comments', 'userblog_id', 'userblog', 'id');
     }
 
     public function down()
