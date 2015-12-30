@@ -41,6 +41,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 
+            [
+                'label' => 'Comments',
+                'format' => 'raw',
+                'value' => function(\app\models\Posts $model){
+                    $result = '' ;
+                    foreach($model->comment  as $comment ){
+                        $result.=  Html::a($comment->title, ['comment/view', 'id' => $comment->id]);
+                        $result.='<br>';
+                    }
+                    return $result;
+                }
+            ],
 
             //'categories.category_id',
             'id',

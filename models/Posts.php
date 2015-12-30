@@ -58,9 +58,14 @@ class Posts extends \yii\db\ActiveRecord
         return $this->hasMany(PostsCategories::className(), ['post_id' => 'id']);
     }*/
 
-    public function getCategories(){
+    public function getCategories()
+    {
         return $this->hasMany(Categories::className(),['id'=>'category_id'])
             ->viaTable('posts_categories',['post_id'=>'id']);
     }
 
+    public function getComment()
+    {
+        return $this->hasMany(Comment::className(),['post_id'=>'id']);
+    }
 }
