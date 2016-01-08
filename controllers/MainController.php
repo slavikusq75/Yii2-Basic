@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: slava
+ * Date: 08.01.16
+ * Time: 16:26
+ */
 namespace app\controllers;
 
 use Yii;
@@ -11,7 +16,7 @@ use app\models\ContactForm;
 use app\models\RegForm;
 
 
-class SiteController extends Controller
+class MainController extends Controller
 {
     public function behaviors()
     {
@@ -52,6 +57,11 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionReg()
+    {
+        $model = New RegForm();
     }
 
     public function actionLogin()
