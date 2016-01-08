@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\RegForm;
+use app\models\Userblog;
 
 
 class MainController extends Controller
@@ -62,6 +63,27 @@ class MainController extends Controller
     public function actionReg()
     {
         $model = New RegForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()):
+            if ($userblog = $model->reg()):
+                if ($userblog->status_id === Userblog::STATUS_ACTIVE):
+                    if (Yii::$app->getUser()->login($userblog)):
+                        return $this->goHome();
+                    endif;
+                endif;
+            else:
+                Yii::$app->session->setFlash('error', 'Registration error appeared.');
+                Yii::error('Registration error');
+                return $this->refresh();
+            endif;
+        endif;
+
+        return $this->render(
+            'reg',
+            [
+                'model' => $model
+            ]
+        );
     }
 
     public function actionLogin()
