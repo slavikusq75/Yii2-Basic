@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Userblog;
 
 AppAsset::register($this);
 ?>
@@ -27,12 +28,31 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'My Blog',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
+    $menuItems = [
+        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'About', 'url' => ['/site/about']],
+        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Category', 'url' => ['/category/index']],
+    ];
+
+    if (Yii::$app->user->isGuest):
+        $menuItems[] = ['label' => 'Registration', 'url' => ['/main/reg']];
+        $menuItems[] = ['label' => 'LOGIN', 'url' => ['/main/login']];
+    else:
+        $menuItems[] = [
+            'label' => 'LOGOUT (' . Yii::$app->user->identity->username . ')',
+            'url' => ['/main/logout'],
+            'linkOptions' => ['data-method' => 'post']
+        ];
+    endif;
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -40,6 +60,8 @@ AppAsset::register($this);
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Category', 'url' => ['/category/index']],
+            ['label' => 'REGISTRATION', 'url' => ['/main/reg']],
+            ['label' => 'LOGIN', 'url' => ['/main/login']],
             Yii::$app->user->isGuest ?
                 ['label' => 'Login', 'url' => ['/site/login']] :
                 [

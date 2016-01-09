@@ -9,6 +9,7 @@ namespace app\models;
 
 use yii\base\Model;
 use Yii;
+use \yii\db\ActiveRecord;
 
 class RegForm extends Model
 {
