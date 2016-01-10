@@ -42,7 +42,7 @@ class RegForm extends Model
 
             [
                 'email', 'unique',
-                'targetClass' => User::className(),
+                'targetClass' => Userblog::className(),
                 'message' => 'This email already exists.'
             ],
 
@@ -75,6 +75,7 @@ class RegForm extends Model
 
     public function reg()
     {
+        //return true;
         $userblog = New Userblog();
         $userblog->username = $this->username;
         $userblog->email = $this->email;

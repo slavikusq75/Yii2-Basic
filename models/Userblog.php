@@ -28,8 +28,10 @@ use \yii\behaviors\TimestampBehavior;
 class Userblog extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_NOT_ACTIVE = 5;
+    const STATUS_NOT_ACTIVE = 1;
     const STATUS_ACTIVE = 10;
+
+    public $password;
 
     /**
      * @inheritdoc
@@ -45,7 +47,13 @@ class Userblog extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password_hash', 'password_reset_token', 'email', 'auth_key', 'role_id', 'status_id', 'user_type_id', 'created_at', 'updated_at', 'password'], 'required'],
+            [['username', 'email', 'password'], 'filter', 'filter' => 'trim'],
+            [['username', 'email', 'status_id'], 'required'],
+            ['email', 'email'],
+            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['password', 'required', 'on' => 'create'],
+            ['username', 'unique', 'message' => 'This username already exists.'],
+            ['email', 'unique', 'message' => 'This email already exists.'],
             [['role_id', 'status_id', 'user_type_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'auth_key', 'password'], 'string', 'max' => 255]
@@ -123,7 +131,7 @@ class Userblog extends ActiveRecord implements IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status_id' => self::STATUS_ACTIVE]);
     }
 
     public static function findIdentityByAccessToken($token, $type = null)

@@ -14,15 +14,37 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
+    public $email;
+    public $rememberMe = true;
+    public $status_id;
 
     public function rules()
     {
         return [
-            [
-                ['username', 'password'],
-                'required'
-            ]
-
+            [['username', 'password'], 'required', 'on' => 'default'],
+            ['email', 'email'],
+            ['rememberMe', 'boolean'],
+            ['password', 'validatePassword']
         ];
     }
+
+    public function validatePassword()
+    {
+
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Username',
+            'password' => 'Password',
+            'rememberMe' => 'Remember Me'
+        ];
+    }
+
+    public function login()
+    {
+        return true;
+    }
+
 }
