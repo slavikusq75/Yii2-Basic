@@ -17,7 +17,7 @@ use app\models\RegForm;
 use app\models\Userblog;
 
 
-class MainController extends Controller
+class MainController extends BehaviorsController
 {
     public function behaviors()
     {
@@ -65,14 +65,14 @@ class MainController extends Controller
         $model = New RegForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()):
-            if ($model->reg()):
-                return $this->goHome();
-            /*if ($userblog = $model->reg()):
+            /*if ($model->reg()):
+                return $this->goHome();*/
+            if ($userblog = $model->reg()):
                 if ($userblog->status_id === Userblog::STATUS_ACTIVE):
                     if (Yii::$app->getUser()->login($userblog)):
                         return $this->goHome();
                     endif;
-                endif; */
+                endif;
             else:
                 Yii::$app->session->setFlash('error', 'Registration error appeared.');
                 Yii::error('Registration error');
@@ -106,9 +106,15 @@ class MainController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
+        return $this->redirect(['/main/index']);
+    }
+
+    /*public function actionLogout()
+    {
+        Yii::$app->user->logout();
 
         return $this->goHome();
-    }
+    }*/
 
     public function actionContact()
     {

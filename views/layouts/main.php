@@ -61,9 +61,10 @@ AppAsset::register($this);
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Category', 'url' => ['/category/index']],
             ['label' => 'REGISTRATION', 'url' => ['/main/reg']],
-            ['label' => 'LOGIN', 'url' => ['/main/login']],
+            //['label' => 'LOGIN', 'url' => ['/main/login']],
             Yii::$app->user->isGuest ?
-                ['label' => 'Login', 'url' => ['/site/login']] :
+                ['label' => 'LOGIN', 'url' => ['/main/login']] :
+                //['label' => 'Login', 'url' => ['/site/login']] :
                 [
                     'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/site/logout'],

@@ -23,6 +23,7 @@ $config = [
             'identityClass' => 'app\models\Userblog',
             //'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['main/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

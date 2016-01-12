@@ -28,9 +28,13 @@ class LoginForm extends Model
         ];
     }
 
-    public function validatePassword()
+    public function validatePassword($attribute)
     {
-
+        if (!$this->hasErrors()):
+            if ($this->password !=1234):
+                $this->addError($attribute, 'Wrong Username or Password.');
+            endif;
+        endif;
     }
 
     public function attributeLabels()
@@ -44,7 +48,11 @@ class LoginForm extends Model
 
     public function login()
     {
-        return true;
+        if ($this->validate()):
+            return true;
+        else:
+            return false;
+        endif;
     }
 
 }
